@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish GoshBot to folder" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish runtime="linux-x64" target_folder="$PROJECT_DIR$/GoshBot/publish" target_framework="netcoreapp3.1" uuid_high="9211802884749675798" uuid_low="-6821003450758309426" />
+    <method v="2" />
+  </configuration>
+</component>

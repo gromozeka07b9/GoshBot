@@ -69,7 +69,7 @@ namespace GoshBot.Jobs
                                 mediaObject.Add("type", "photo");
                                 if (string.IsNullOrEmpty(captionText))
                                 {
-                                    captionText = $"<i>{@"" + point.Description + @"" + Environment.NewLine + Environment.NewLine  }</i>Маршрут <b>{ route.Name + Environment.NewLine }</b><i>{ @"" + route.Description + @"" }</i>";
+                                    captionText = $"<i>{@"" + point.Description + @"" + Environment.NewLine + Environment.NewLine  }</i>Маршрут <a href='http://igosh.pro/gallery/{ route.PublicReferenceHash }'>{ route.Name}</a>{Environment.NewLine}<i>{ @"" + route.Description + Environment.NewLine + @"" }</i>";
                                     mediaObject.Add("caption", captionText);
                                 }
                                 mediaObject.Add("media", url);
@@ -79,6 +79,10 @@ namespace GoshBot.Jobs
 
                             _logger.LogInformation("request sendMediaGroup");
                             var taskSendMediaGroup = Task.Run(async () => await telegramQueryUrl.AppendPathSegment("sendMediaGroup").SetQueryParam("chat_id", chatId).SetQueryParam("media", medias.ToString()).PostAsync(), cancellationToken);
+                            taskSendMediaGroup.ContinueWith((status) =>
+                            {
+                                _logger.LogInformation("Telegram API result code:" + status.Result.StatusCode);
+                            });
                         });
                     });
                 });
@@ -127,5 +131,6 @@ namespace GoshBot.Jobs
         public string RouteId;
         public string Name;
         public string Description;
+        public string PublicReferenceHash;
     }
 }

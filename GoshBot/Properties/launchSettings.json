@@ -20,12 +20,12 @@
     "GoshBot": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "echo",
       "applicationUrl": "https://localhost:6001;http://localhost:6000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "CRONEXPRESSION": "0/20 * * * * ?",
-        "GOSHBOTCHATID": "@gosh_life"
+        "GOSHBOTCHATID": "@goshtestingbot"
       }
     }
   }
