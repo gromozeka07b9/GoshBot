@@ -95,7 +95,20 @@ namespace GoshBot.Jobs
         private async Task<Route> getRoutes()
         {
             var routeRequest = "http://igosh.pro/api/v2/public/routes".SetQueryParam("pageSize", "1000").SetQueryParam("range", "[0,9]");
-            List<Route> resultListRoutes = await routeRequest.GetJsonAsync<List<Route>>();
+            List<Route> resultListRoutes = new List<Route>();
+            try
+            {
+                resultListRoutes = await routeRequest.GetJsonAsync<List<Route>>();      
+                _logger.LogInformation($"Route requested, count [{ resultListRoutes.Count }]");
+            }
+            catch (FlurlHttpException ex)
+            {
+                _logger.LogInformation("Route requested. Flurl http error:" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Route requested. Error:" + ex.Message);
+            }
             Random rnd = new Random();
             int index = rnd.Next(0, resultListRoutes.Count);
             return resultListRoutes[index];
@@ -105,7 +118,20 @@ namespace GoshBot.Jobs
         {
             string jsonRouteId = @"{""routeId"":""" + route.RouteId + @"""}";
             var routeRequest = "http://igosh.pro/api/v2/public/RoutePoints".SetQueryParam("pageSize", "1000").SetQueryParam("range", "[0,9]").SetQueryParam("filter", jsonRouteId);
-            List<RoutePoint> resultListPoints = await routeRequest.GetJsonAsync<List<RoutePoint>>();
+            List<RoutePoint> resultListPoints = new List<RoutePoint>();
+            try
+            {
+                resultListPoints = await routeRequest.GetJsonAsync<List<RoutePoint>>();      
+                _logger.LogInformation($"route point requested, count [{ resultListPoints.Count }]");
+            }
+            catch (FlurlHttpException ex)
+            {
+                _logger.LogInformation("Route point requested. Flurl http error:" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("route point requested. Error:" + ex.Message);
+            }
             Random rnd = new Random();
             int index = rnd.Next(0, resultListPoints.Count);
             return resultListPoints[index];
@@ -114,7 +140,20 @@ namespace GoshBot.Jobs
         private async Task<List<string>> getMedias(RoutePoint routePoint)
         {
             var routeRequest = "http://igosh.pro/api/v2/public/RoutePoints".AppendPathSegment(routePoint.RoutePointId).AppendPathSegment("medias");
-            List<String> resultListUrls = await routeRequest.GetJsonAsync<List<String>>();
+            List<String> resultListUrls = new List<string>();
+            try
+            {
+                resultListUrls = await routeRequest.GetJsonAsync<List<String>>();      
+                _logger.LogInformation($"Medias requested, count [{ resultListUrls.Count }]");
+            }
+            catch (FlurlHttpException ex)
+            {
+                _logger.LogInformation("Medias requested. Flurl http error:" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Medias requested. Error:" + ex.Message);
+            }
             return resultListUrls;
         }
 
