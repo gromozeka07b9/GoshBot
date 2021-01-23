@@ -167,9 +167,13 @@ namespace GoshBot.Jobs
 
     internal class Route
     {
-        public string RouteId;
+        public string RouteId
+        {
+            get => Id;
+        }
         public string Name;
         public string Description;
         public string PublicReferenceHash;
+        public string Id;
     }
 }
